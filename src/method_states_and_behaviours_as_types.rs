@@ -1,21 +1,13 @@
-pub struct Post {
-    content: String,
-}
-
 pub struct DraftPost {
     content: String,
 }
 
-impl Post {
-    pub fn new() -> DraftPost {
-        DraftPost {
-            content: String::new(),
-        }
-    }
+pub struct PendingReviewPost {
+    content: String,
+}
 
-    pub fn content(&self) -> &str {
-        &self.content
-    }
+pub struct Post {
+    content: String,
 }
 
 impl DraftPost {
@@ -28,10 +20,6 @@ impl DraftPost {
             content: self.content,
         }
     }
-}
-
-pub struct PendingReviewPost {
-    content: String,
 }
 
 impl PendingReviewPost {
@@ -47,3 +35,16 @@ impl PendingReviewPost {
         }
     }
 }
+
+impl Post {
+    pub fn new() -> DraftPost {
+        DraftPost {
+            content: String::new(),
+        }
+    }
+
+    pub fn content(&self) -> &str {
+        &self.content
+    }
+}
+
