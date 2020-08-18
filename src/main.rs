@@ -19,6 +19,9 @@ fn method_state_pattern_immediate_approve() {
     assert_eq!("", post.content());
 
     post.approve();
+    assert_eq!("", post.content());
+
+    post.approve();
     assert_eq!("Go green!", post.content());
     println!("{}", post.content());
 }
@@ -35,12 +38,18 @@ fn method_state_pattern_initial_rejection() {
     post.reject();
     assert_eq!("", post.content());
 
-    post.add_text(" A little bit of blue, together with green.");
+    post.add_text(" A little bit of blue");
     assert_eq!("", post.content());
 
     post.request_review();
-
     post.approve();
+    post.reject();
+
+    post.add_text(", together with green.");
+    post.request_review();
+    post.approve();
+    post.approve();
+
     assert_eq!("How about blue? A little bit of blue, together with green.",
                post.content());
     println!("{}", post.content());
