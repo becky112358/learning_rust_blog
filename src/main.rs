@@ -2,27 +2,59 @@ mod method_state_pattern;
 mod method_states_and_behaviours_as_types;
 
 fn main() {
-    let mut post0 = method_state_pattern::Post::new();
+    method_state_pattern_immediate_approve();
 
-    post0.add_text("Go green!");
-    assert_eq!("", post0.content());
+    method_state_pattern_initial_rejection();
 
-    post0.request_review();
-    assert_eq!("", post0.content());
+    method_states_and_behaviours_as_types();
+}
 
-    post0.approve();
-    assert_eq!("Go green!", post0.content());
-    println!("{}", post0.content());
+fn method_state_pattern_immediate_approve() {
+    let mut post = method_state_pattern::Post::new();
 
+    post.add_text("Go green!");
+    assert_eq!("", post.content());
 
-    let mut post1 = method_states_and_behaviours_as_types::Post::new();
+    post.request_review();
+    assert_eq!("", post.content());
 
-    post1.add_text("Green green green!!");
+    post.approve();
+    assert_eq!("Go green!", post.content());
+    println!("{}", post.content());
+}
 
-    let post1 = post1.request_review();
+fn method_state_pattern_initial_rejection() {
+    let mut post = method_state_pattern::Post::new();
 
-    let post1 = post1.approve();
+    post.add_text("How about blue?");
+    assert_eq!("", post.content());
 
-    assert_eq!("Green green green!!", post1.content());
-    println!("{}", post1.content());
+    post.request_review();
+    assert_eq!("", post.content());
+
+    post.reject();
+    assert_eq!("", post.content());
+
+    post.add_text(" A little bit of blue, together with green.");
+    assert_eq!("", post.content());
+
+    post.request_review();
+
+    post.approve();
+    assert_eq!("How about blue? A little bit of blue, together with green.",
+               post.content());
+    println!("{}", post.content());
+}
+
+fn method_states_and_behaviours_as_types() {
+    let mut post = method_states_and_behaviours_as_types::Post::new();
+
+    post.add_text("Green green green!!");
+
+    let post = post.request_review();
+
+    let post = post.approve();
+
+    assert_eq!("Green green green!!", post.content());
+    println!("{}", post.content());
 }
