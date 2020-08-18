@@ -6,7 +6,9 @@ fn main() {
 
     method_state_pattern_initial_rejection();
 
-    method_states_and_behaviours_as_types();
+    method_states_and_behaviours_as_types_immediate_approve();
+
+    method_states_and_behaviours_as_types_initial_rejection();
 }
 
 fn method_state_pattern_immediate_approve() {
@@ -55,7 +57,7 @@ fn method_state_pattern_initial_rejection() {
     println!("{}", post.content());
 }
 
-fn method_states_and_behaviours_as_types() {
+fn method_states_and_behaviours_as_types_immediate_approve() {
     let mut post = method_states_and_behaviours_as_types::Post::new();
 
     post.add_text("Green green green!!");
@@ -67,3 +69,24 @@ fn method_states_and_behaviours_as_types() {
     assert_eq!("Green green green!!", post.content());
     println!("{}", post.content());
 }
+
+fn method_states_and_behaviours_as_types_initial_rejection() {
+    let mut post = method_states_and_behaviours_as_types::Post::new();
+
+    post.add_text("Sometimes I like yellow");
+
+    let post = post.request_review();
+
+    let mut post = post.reject();
+
+    post.add_text(", as long as it's with green.");
+
+    let post = post.request_review();
+
+    let post = post.approve();
+
+    assert_eq!("Sometimes I like yellow, as long as it's with green.",
+               post.content());
+    println!("{}", post.content());
+}
+
