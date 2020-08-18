@@ -66,6 +66,8 @@ fn method_states_and_behaviours_as_types_immediate_approve() {
 
     let post = post.approve();
 
+    let post = post.approve();
+
     assert_eq!("Green green green!!", post.content());
     println!("{}", post.content());
 }
@@ -85,7 +87,17 @@ fn method_states_and_behaviours_as_types_initial_rejection() {
 
     let post = post.approve();
 
-    assert_eq!("Sometimes I like yellow, as long as it's with green.",
+    let mut post = post.reject();
+
+    post.add_text(" LOTS of green!");
+
+    let post = post.request_review();
+
+    let post = post.approve();
+
+    let post = post.approve();
+
+    assert_eq!("Sometimes I like yellow, as long as it's with green. LOTS of green!",
                post.content());
     println!("{}", post.content());
 }
